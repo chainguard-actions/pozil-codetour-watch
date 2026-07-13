@@ -1,0 +1,50 @@
+{
+    "name": "codetour-watch",
+    "version": "3.0.0",
+    "description": "GitHub Action that flags file changes that may affect CodeTour content",
+    "main": "src/index.js",
+    "scripts": {
+        "lint": "eslint src/**/*.js",
+        "prettier": "prettier --write \"**/*.{html,js,json,md,yaml,yml}\"",
+        "prettier:verify": "prettier --list-different \"**/*.{html,js,json,md,yaml,yml}\"",
+        "prepare": "husky || true",
+        "precommit": "lint-staged"
+    },
+    "author": "Philippe Ozil (pozil)",
+    "dependencies": {
+        "@actions/core": "^1.10.1",
+        "@actions/github": "^6.0.0"
+    },
+    "devDependencies": {
+        "eslint": "^9.2.0",
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.2",
+        "prettier": "^3.2.5"
+    },
+    "license": "CC0-1.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pozil/codetour-watch.git"
+    },
+    "keywords": [
+        "github",
+        "action",
+        "codetour",
+        "watch"
+    ],
+    "lint-staged": {
+        "/*.{html,js,json,md,yaml,yml}": [
+            "prettier --write"
+        ],
+        "src/**/*.js": [
+            "prettier --write",
+            "eslint"
+        ]
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "volta": {
+        "node": "20.13.1"
+    }
+}
