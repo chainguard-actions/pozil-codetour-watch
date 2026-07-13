@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
+| v3.0.0 | [`v3.0.0`](https://github.com/chainguard-actions/pozil-codetour-watch/tree/v3.0.0) | [`d479735`](https://github.com/pozil/codetour-watch/commit/d479735af7f85dc361eb680afdf75661471c5aa2) |
 | v4.0.0 | [`v4.0.0`](https://github.com/chainguard-actions/pozil-codetour-watch/tree/v4.0.0) | [`6a82315`](https://github.com/pozil/codetour-watch/commit/6a82315f9c0e91b45d7c6d8f968994ae02e8e741) |
 
 ## Privacy
