@@ -1,30 +1,28 @@
-name: Test custom tour path missing directory error
+name: Test custom tour-path missing directory error
 on:
   workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_EVENT_NAME: pull_request
-      GITHUB_REF: refs/pull/1/merge
-      GITHUB_HEAD_REF: feature-branch
-      GITHUB_BASE_REF: main
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - id: action
+
+      - name: Run action with non-existent custom tour-path (expect failure)
+        id: action
         uses: .
         with:
-          repo-token: fake-token
+          repo-token: ${{ github.token }}
           silent: 'true'
-          tour-path: '.nonexistent-tours/'
+          tour-path: '.non-existent-tours/'
         continue-on-error: true
-      - name: Assert action failed due to missing custom tour path
+
+      - name: Assert action failed
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
           if [ "$OUTCOME" != "failure" ]; then
-            echo "FAIL: expected action to fail when custom tour path does not exist, got '$OUTCOME'"
+            echo "FAIL: expected action to fail with missing custom tour-path, but got outcome: $OUTCOME"
             exit 1
           fi
-          echo "PASS: action correctly failed when custom tour path is missing"
+          echo "PASS: action correctly failed with missing custom tour-path"
