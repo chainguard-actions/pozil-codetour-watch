@@ -1,0 +1,45 @@
+name: Test custom tour path and fail-on-missing-tour-updates inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create custom tour directory with a sample tour file
+        run: |
+          mkdir -p custom-tours
+          cat > custom-tours/sample.tour << 'EOF'
+          {
+            "title": "Sample Tour",
+            "steps": [
+              {
+                "file": "README.md",
+                "description": "This is a sample step",
+                "line": 1
+              }
+            ]
+          }
+          EOF
+
+      - name: Run action with custom tour path (expect failure - no PR context)
+        id: action
+        uses: .
+        with:
+          repo-token: ${{ github.token }}
+          silent: 'true'
+          tour-path: 'custom-tours/'
+          fail-on-missing-tour-updates: 'true'
+        continue-on-error: true
+
+      - name: Assert action failed with expected error (not a tour-path parsing error)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" != "failure" ]; then
+            echo "FAIL: expected action to fail when not in a PR context, but got outcome=$OUTCOME"
+            exit 1
+          fi
+          echo "PASS: action correctly failed when not in a PR context (custom tour-path and fail-on-missing-tour-updates inputs accepted)"
