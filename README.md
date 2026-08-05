@@ -1,15 +1,53 @@
-# pozil/codetour-watch
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-CodeTour%20Watch-blue.svg?colorA=24292e&colorB=0366d6&style=flat&longCache=true&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAM6wAADOsB5dZE0gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAERSURBVCiRhZG/SsMxFEZPfsVJ61jbxaF0cRQRcRJ9hlYn30IHN/+9iquDCOIsblIrOjqKgy5aKoJQj4O3EEtbPwhJbr6Te28CmdSKeqzeqr0YbfVIrTBKakvtOl5dtTkK+v4HfA9PEyBFCY9AGVgCBLaBp1jPAyfAJ/AAdIEG0dNAiyP7+K1qIfMdonZic6+WJoBJvQlvuwDqcXadUuqPA1NKAlexbRTAIMvMOCjTbMwl1LtI/6KWJ5Q6rT6Ht1MA58AX8Apcqqt5r2qhrgAXQC3CZ6i1+KMd9TRu3MvA3aH/fFPnBodb6oe6HM8+lYHrGdRXW8M9bMZtPXUji69lmf5Cmamq7quNLFZXD9Rq7v0Bpc1o/tp0fisAAAAASUVORK5CYII=)](https://github.com/marketplace/actions/codetour-watch)
 
-Flags file changes that may affect CodeTour content
+# CodeTour Watch
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/pozil/codetour-watch](https://github.com/pozil/codetour-watch).
+A GitHub action that flags file changes in a PR that may affect [CodeTour content](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour).
 
-## Versions
+The action comments on the PR to report changes that may impact CodeTour:
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v3.0.0 | [`v3.0.0`](https://github.com/chainguard-actions/pozil-codetour-watch/tree/v3.0.0) | [`d479735`](https://github.com/pozil/codetour-watch/commit/d479735af7f85dc361eb680afdf75661471c5aa2) |
-| v4.0.0 | [`v4.0.0`](https://github.com/chainguard-actions/pozil-codetour-watch/tree/v4.0.0) | [`6a82315`](https://github.com/pozil/codetour-watch/commit/6a82315f9c0e91b45d7c6d8f968994ae02e8e741) |
+![Screenshot of comment](docs/comment-screenshot.png)
+
+The action will not comment the PR if changes do not impact CodeTour.
+
+## Usage
+
+```yml
+name: CodeTour watch
+
+on:
+    pull_request:
+        types: [opened, edited, synchronize, reopened]
+
+jobs:
+    codetour-watch:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Checkout source code'
+              uses: actions/checkout@v2
+
+            - name: 'Watch CodeTour changes'
+              uses: pozil/codetour-watch@v1.6.0
+              with:
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+## Inputs
+
+| Name                           | Required | Description                                                                                | Default                |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------ | ---------------------- |
+| `repo-token`                   | false    | The GITHUB_TOKEN, required to comment.                                                     | `secrets.GITHUB_TOKEN` |
+| `silent`                       | false    | Optional flag that turns off the comment on the PR.                                        | `false`                |
+| `tour-path`                    | false    | Optional flag that specifies a custom `.tours` folder location.                            | `.tours`               |
+| `fail-on-missing-tour-updates` | false    | Optional flag that forces the action to fail when update tour files are missing from a PR. | `false`                |
+
+## Outputs
+
+| Name                 | Description                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------ |
+| `impactedFiles`      | The list of files covered by tours that were changed.                                |
+| `impactedTours`      | The list of tours that were impacted by the PR.                                      |
+| `missingTourUpdates` | The list of tours that were impacted by the changes but that are not part of the PR. |
 
 ## Privacy
 

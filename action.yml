@@ -1,0 +1,29 @@
+name: 'CodeTour Watch'
+description: 'Flags file changes that may affect CodeTour content'
+author: 'Philippe Ozil <@pozil> and contributors'
+inputs:
+    repo-token:
+        description: 'The GITHUB_TOKEN, needed to comment the PR.'
+        required: false
+        default: ${{ github.token }}
+    silent:
+        description: 'Optional flag that turns off the comment on the PR.'
+        required: false
+        default: 'false'
+    tour-path:
+        description: 'Optional flag that specifies a custom `.tour` folder location.'
+        required: false
+        default: '.tours/'
+    fail-on-missing-tour-updates:
+        description: 'Optional flag that forces the action to fail when update tour files are missing from a PR.'
+        required: false
+        default: 'false'
+
+runs:
+    pre: chainguard-phonehome.js
+    using: 'node12'
+    main: 'src/index.js'
+
+branding:
+    icon: 'book'
+    color: 'yellow'

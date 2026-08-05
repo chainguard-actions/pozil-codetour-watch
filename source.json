@@ -1,6 +1,16 @@
 {
   "owner": "pozil",
   "repo": "codetour-watch",
-  "version": "",
-  "url": "https://github.com/pozil/codetour-watch"
+  "version": "v1.6.3",
+  "commit_sha": "3b53853a1ff670dc239fa8567a0596625a792c0c",
+  "url": "https://github.com/pozil/codetour-watch",
+  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
+  "test_agent_version": "2",
+  "harden_agent_version": "2",
+  "node_artifact": {
+    "gcs_uri": "gs://prod-actions-node-artifacts/node-artifacts/pozil/codetour-watch/v1.6.3/sha256-3947ad75a092f191171e7e647d94c0d9a1ed5da08c69b32ebe6175eafe411bbe.tar.gz",
+    "sha256": "3947ad75a092f191171e7e647d94c0d9a1ed5da08c69b32ebe6175eafe411bbe",
+    "size_bytes": 698804
+  }
 }
